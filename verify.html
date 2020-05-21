@@ -3,26 +3,47 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://unpkg.com/bulma@0.8.0/css/bulma.min.css" />
     <script src="jQuery.js" type="text/javascript"></script>
     <title>Document</title>
   </head>
   <body>
-    <h2>Please upload your QR cert</h2>
+    <section>
+      <div class="container has-text-centered">
+        <div class="tabs is-fullwidth">
+          <ul>
+            <li><a href="contactTracing.html">Contact Tracing</a></li>
+            <li ><a href="sign.html">Signing</a></li>
+            <li class="is-active"><a href="verify.html">Entry Verification</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="container has-text-centered">
+        <h1 class="title">Show your authorization code</h1>
+      </div>
+      <div class="container">
     <form id="yes">
-      <label for="cert">Input text here</label>
+      <label for="cert">Input text here:</label>
       <br /><br />
-      <textarea rows="10" cols="40" id="cert"></textarea>
-      <div>
-        <h3>Choose a building</h3>
-        <input id="a" type="radio" name="building" value="aaaaa" checked /> Building 1<br />
-        <input id="b" type="radio" name="building" value="bbbbb" /> Building 2<br />
-        <input id="c" type="radio" name="building" value="ccccc" /> Building 3<br />
+      <textarea class="textarea" placeholder="Input your JSON certificate" rows="10" cols="40" id="cert"></textarea>
+        <h3>Choose a building:</h3>
+        <div class="control">
+        <label class="label">
+        <input id="a" type="radio" name="building" value="aaaaa" checked/> Building 1<br>
+        </label>
+        <label class="label">
+        <input id="b" type="radio" name="building" value="bbbbb"/> Building 2<br>
+        </label>
+        <label class="label">
+        <input id="c" type="radio" name="building" value="ccccc"/> Building 3<br>
+        </label>
       </div>
       <br></br>
-      <button type="button" id = "enter">Enter</button>
-      <button type="button" id = "leave">Leave</button>
+      <button class="button is-success is-outlined" type="button" id = "enter">Enter</button>
+      <button class="button is-warning is-outlined" type="button" id = "leave">Leave</button>
     </form>
-
+  </div>
+  </section>
     <script src="scriptVerify.js" type="text/javascript"></script>
   </body>
 </html>

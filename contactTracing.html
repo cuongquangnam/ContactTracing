@@ -27,7 +27,7 @@
           <ul>
             <li class="is-active"><a href="contactTracing.html">Contact Tracing</a></li>
             <li><a href="sign.html">Signing</a></li>
-            <li><a>Verifying</a></li>
+            <li><a href="verify.html">Entry Verification</a></li>
           </ul>
         </div>
       </div>
@@ -46,7 +46,7 @@
       </div>
       <div>
         <label for="DID">Input the DID</label>
-        <input class="input is-rounded" id="DID" type="text" size="60" />
+        <input class="input is-rounded" placeholder="DID:eth:string" id="DID" type="text" size="60" />
       </div>
       <br>
       <div class="form">
@@ -57,7 +57,7 @@
       <label for="endingtime">Ending time</label>
       <input id="endingtime" type="datetime-local" />
     </div>
-      <input class="button" id="submit" type="submit" value="Submit" />
+      <input class="button is-primary is-outlined" id="submit" type="submit" value="Submit" />
     </form>
     <div id="result" class="center"></div>
   </section>
