@@ -64,12 +64,13 @@ contract DIDDocument {
    
 }
 
-contract buildingFactory{
+contract BuildingFactory{
     string[] public array_building;
     DIDDocumentFactory public didfactory;
+    mapping(address=>address) public inBuilding;
 
     function createBuilding( string memory newName, string memory newLatitude, string memory newLongitude) public returns(string memory){
-        building new_building = new building(newName,newLatitude,newLongitude);
+        Building new_building = new Building(newName,newLatitude,newLongitude);
         string memory id = didfactory.createDIDDocument(address(new_building));
         new_building.set_building_DID(id);
         array_building.push(id);
@@ -80,23 +81,35 @@ contract buildingFactory{
         didfactory = DIDDocumentFactory(x);
     }
 
-    event arrive (
+    event enter (
         address indexed workerAddress,
-        address indexed buildingAddress
+        address indexed buildingAddress,
+        string longitude,
+        string latitude
     );
 
     event leave (
-        address indexed workderAddress,
-        address indexed buildingAddress
+        address indexed workerAddress,
+        address indexed buildingAddress,
+        string longitude,
+        string lattitude
     );
 
-    function _arrive(address workerAddress, address buildingAddress) public{
-        emit arrive(workerAddress,buildingAddress);
+    function _enter(address workerAddress, address buildingAddress) public{
+        require(inBuilding[workerAddress]==address(0),
+        "You have entered another building");
+        Building b = Building(buildingAddress);
+        emit enter(workerAddress,buildingAddress,b.longitude(),b.latitude());
+        inBuilding[workerAddress] = buildingAddress;
     }
 
     function _leave(address workerAddress, address buildingAddress) public {
         // require(building(buildingAddress).)
-        emit leave(workerAddress,buildingAddress);
+        require(inBuilding[workerAddress]==buildingAddress,
+        "You have not entered this building");
+        Building b = Building(buildingAddress);
+        emit leave(workerAddress,buildingAddress,b.longitude(),b.latitude());
+        inBuilding[workerAddress] = address(0);
     }
     
     function getBuildingAt(uint x) public view returns (string memory){
@@ -104,12 +117,14 @@ contract buildingFactory{
     }
 }
 
-contract building {
+contract Building {
     
     string public building_DID;
     string public name;
     string public latitude;
     string public longitude;
+    mapping(string=>bool) public companyOwner;
+    // mapping(address=>uint) public inBuilding;
     // mapping(string=>bool) in; 
     constructor( string memory newName, string memory newLatitude, string memory newLongitude) public{
         name = newName;
@@ -121,9 +136,28 @@ contract building {
         building_DID = x;
     }
 
+    function add_company(string memory x) public {
+        companyOwner[x] = true;
+    }
+
+    function check_companyOwner(string memory x) public view returns (bool) {
+        return companyOwner[x];
+    } 
+    
+    function set_companyOwner(string memory x) public {
+        companyOwner[x] = true;
+    }
+    // function check_in_building(address x) public view returns(uint){
+    //     return inBuilding[x];
+    // }
+
+    // function set_in_building(address x, uint status) public {
+    //     inBuilding[x] = status;
+    // }
     // function checkIn()
     // mapping(string=> boolean);
 }
+
 
 
 

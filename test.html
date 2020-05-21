@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Decode QRCode from image using javascript</title>
+    </head>
+    <body>
+        <input type="button" id="action" value="Decode"/>
+        <script type="text/javascript" src="https://github.com/LazarSoft/jsqrcode/blob/master/src/alignpat.js"></script>
+        <script type="text/javascript" src="https://github.com/LazarSoft/jsqrcode/blob/master/src/version.js"></script>
+        <script type="text/javascript" src="https://github.com/LazarSoft/jsqrcode/blob/master/src/detector.js"></script>
+        <script type="text/javascript" src="https://github.com/LazarSoft/jsqrcode/blob/master/src/formatinf.js"></script>
+        <script type="text/javascript" src="https://github.com/LazarSoft/jsqrcode/blob/master/src/errorlevel.js"></script>
+        <script type="text/javascript" src="https://github.com/LazarSoft/jsqrcode/blob/master/src/bitmat.js"></script>
+        <script type="text/javascript" src="https://github.com/LazarSoft/jsqrcode/blob/master/src/datablock.js"></script>
+        <script type="text/javascript" src="https://github.com/LazarSoft/jsqrcode/blob/master/src/bmparser.js"></script>
+        <script type="text/javascript" src="https://github.com/LazarSoft/jsqrcode/blob/master/src/datamask.js"></script>
+        <script type="text/javascript" src="https://github.com/LazarSoft/jsqrcode/blob/master/src/rsdecoder.js"></script>
+        <script type="text/javascript" src="https://github.com/LazarSoft/jsqrcode/blob/master/src/gf256poly.js"></script>
+        <script type="text/javascript" src="https://github.com/LazarSoft/jsqrcode/blob/master/src/gf256.js"></script>
+        <script type="text/javascript" src="https://github.com/LazarSoft/jsqrcode/blob/master/src/decoder.js"></script>
+        <script type="text/javascript" src="https://github.com/LazarSoft/jsqrcode/blob/master/src/qrcode.js"></script>
+        <script type="text/javascript" src="https://github.com/LazarSoft/jsqrcode/blob/master/src/findpat.js"></script>
+        <script type="text/javascript" src="https://github.com/LazarSoft/jsqrcode/blob/master/src/alignpat.js"></script>
+        <script type="text/javascript" src="https://github.com/LazarSoft/jsqrcode/blob/master/src/databr.js"></script>
+        <script>
+            // A qrcode with "ourcodeworld.com" as value in format base64 encoded
+            var imageURI = "./download.png";
+
+            /**
+             * The function decodeImageFromBase64 expects as first parameter a base64 string from a QRCode.
+             * As second parameter the callback that expects the data from the QRCode as first parameter.
+             */
+            function decodeImageFromBase64(data, callback){
+                // set callback
+                qrcode.callback = callback;
+                // Start decoding
+                qrcode.decode(data)
+            }
+
+            // On button click, decode the qrCode from the base64 format.
+            document.getElementById("action").addEventListener('click',function(){
+                decodeImageFromBase64(imageURI,function(decodedInformation){
+                    alert(decodedInformation);
+                });
+            },false);
+        </script>
+    </body>
+</html>
