@@ -11,7 +11,7 @@ $("#submit").on('click',(e)=>{
         url:"/getsignature"
     }).done(function(res){
         result = document.querySelector("#res");
-        result.textContent="";
-        result.textContent+=res;
+        // result.innerHTML="<div>";
+        result.textContent=res;
     })
 })

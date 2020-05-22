@@ -3,7 +3,7 @@
 $("#myform").on("submit", async (e) => {
     e.preventDefault();
   let type = document.querySelector("#type").value;
-  let address = "0x"+document.querySelector("#DID").value.substring(10);
+  let inputaddress = document.querySelector("#DID").value.substring(10);
   let startingTime = document.querySelector("#startingtime").value;
   let endingTime = document.querySelector("#endingtime").value;
   let dateTimeParts = startingTime.split("T");
@@ -33,7 +33,7 @@ $("#myform").on("submit", async (e) => {
   if (type == "worker") {
     await $.ajax({
       data: {
-        workerAddress: address,
+        workerAddress: inputaddress,
         startingTime: startingTime,
         endingTime: endingTime,
       },
@@ -41,30 +41,53 @@ $("#myform").on("submit", async (e) => {
       url: "/findByWorker",
     }).done(function (res) {
       let resultHTML = document.querySelector("#result");
+      let address = res.address;
+      let time = res.time;
       resultHTML.innerHTML="";
-      resultHTML.innerHTML+="<div>List of buildings that the workers has gone to \
-      in the given period is </div>"
-      for (let i of res){
-          resultHTML.innerHTML+="<div>did:ether:"+i+"</div>";
-      }
+    //   resultHTML.innerHTML+="<div>List of buildings that the workers has gone to \
+    //   in the given period is </div>"
+    a = ""
+    var i = 0 
+    for (;i< address.length;i+=1){
+        a+="<tr><td >did:ether:"+address[i]+"</td>";
+        a+="<td style='text-align:center;'>"+time[i]+"</td></tr>"
+    }
+      resultHTML.innerHTML+="<table border='1'>\
+      <thead><tr><th  style='text-align:center;'> Building DID</th>\
+      <th style='text-align:center;'>Time entering the buildings</th></tr></thead><tbody>"+a+"</tbody></table>";
+
+    //   console.log(resultHTML);
+    //   if (i==address.length)
+    //   resultHTML.innerHTML+="</tbody></table>"
     });
   } else {
     $.ajax({
-      data: JSON.stringify({
-        buildingAddress: address,
+      data: {
+        buildingAddress: inputaddress,
         startingTime: startingTime,
         endingTime: endingTime,
-      }),
+      },
       type: "GET",
       url: "/findByBuilding",
     }).done(function (res) {
         let resultHTML = document.querySelector("#result");
+        let address = res.address;
+        let time = res.time;
+        // resultHTML.innerHTML="";
         resultHTML.innerHTML="";
-        resultHTML.innerHTML+="<div>List of workers that have  \
-        been to the building in the given period is </div>"
-        for (let i of res){
-            resultHTML.innerHTML+="<div>did:ether:"+i+"</div>";
+        a = ""
+        var i = 0 
+        for (;i< address.length;i+=1){
+            a+="<tr><td >did:ether:"+address[i]+"</td>";
+            a+="<td style='text-align:center;'>"+time[i]+"</td></tr>"
         }
-    });
+          resultHTML.innerHTML+="<table border='1'>\
+          <thead><tr><th  style='text-align:center;'> Worker DID</th>\
+          <th style='text-align:center;'>Time entering the buildings</th></tr></thead><tbody>"+a+"</tbody></table>";
+    
+        //   console.log(resultHTML);
+        //   if (i==address.length)
+        //   resultHTML.innerHTML+="</tbody></table>"
+        });
   }
 });

@@ -36,7 +36,10 @@
       </div>
     <form id="myform" class="center">
       <div class="content">
-        <label for="type">Choose Worker or building ID</label>
+        <label for="type">Choose whether you want to 
+          track a building or a worker
+        </label>
+        <br>
         <div class="select is-rounded">
         <select id="type">
           <option value="worker">Worker</option>
@@ -51,12 +54,16 @@
       <br>
       <div class="form">
       <label for="startingtime">Starting time</label>
+      <br>
       <input id="startingtime" type="datetime-local" />
     </div>
+    <br>
     <div class="form">
       <label for="endingtime">Ending time</label>
+      <br>
       <input id="endingtime" type="datetime-local" />
     </div>
+      <br>
       <input class="button is-primary is-outlined" id="submit" type="submit" value="Submit" />
     </form>
     <div id="result" class="center"></div>

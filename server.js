@@ -3,7 +3,7 @@ const server = express();
 const bodyParser = require("body-parser");
 const path = require("path");
 const Web3 = require("web3");
-const { Image } = require("image-js");
+// const { Image } = require("image-js");
 const DIDDocumentFactory = require("./build/contracts/DIDDocumentFactory.json");
 const buildingFactory = require("./build/contracts/buildingFactory.json");
 const Building = require("./build/contracts/Building.json");
@@ -47,19 +47,26 @@ async function getBuildingIn(workerAddress, startTime, endTime) {
     toBlock = res[1];
   } else toBlock = latest.number;
   console.log(toBlock);
-  let arr = [];
+  let arr1 = [];
+  let arr2 = [];
   await bFac
     .getPastEvents("enter", {
       filter: { workerAddress: workerAddress },
       fromBlock: fromBlock,
       toBlock: toBlock,
     })
-    .then((res) => {
+    .then(async (res) => {
       for (let i of res) {
-        arr.push(i.returnValues.buildingAddress);
+        arr1.push(i.returnValues.buildingAddress);
+        let block = await web3.eth.getBlock(i.blockNumber);
+        let time = new Date(block.timestamp*1000+ 8*3600*1000);
+        arr2.push(time);
       }
     });
-  return arr;
+  return {
+      address:arr1,
+      time:arr2
+  };
 }
 
 async function getWorkerIn(buildingAddress, startTime, endTime) {
@@ -73,30 +80,38 @@ async function getWorkerIn(buildingAddress, startTime, endTime) {
     toBlock = res[1];
   } else toBlock = latest.number;
   console.log(toBlock);
-  let arr = [];
+  console.log(buildingAddress);
+  let arr1 = [];
+  let arr2 = [];
   await bFac
     .getPastEvents("enter", {
       filter: { buildingAddress: buildingAddress },
       fromBlock: fromBlock,
       toBlock: toBlock,
     })
-    .then((res) => {
+    .then(async (res) => {
       for (let i of res) {
-        arr.push(i.returnValues.workerAddress);
+        arr1.push(i.returnValues.workerAddress);
+        let block = await web3.eth.getBlock(i.blockNumber);
+        let time = new Date(block.timestamp*1000+ 8*3600*1000);
+        arr2.push(time);
       }
     });
-  return arr;
+  return {
+      address:arr1,
+      time:arr2
+  };
 }
 
-server.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname + "/index.html"));
+server.get("/contactTracing.html", (req, res) => {
+  res.sendFile(path.join(__dirname + "/contactTracing.html"));
 });
 
-server.get("/enterLeave", (req, res) => {
+server.get("/verify.html", (req, res) => {
   res.sendFile(path.join(__dirname + "/verify.html"));
 });
 
-server.get("/sign", (req, res) => {
+server.get("/sign.html", (req, res) => {
   res.sendFile(path.join(__dirname + "/sign.html"));
 });
 
@@ -121,6 +136,7 @@ server.get("/findByBuilding", async (req, res) => {
   //   console.log(workerAddress);
   //   console.log(startingTime);
   //   console.log(endingTime);
+  console.log(startingTime)
   let arr = await getWorkerIn(buildingAddress, startingTime, endingTime);
   console.log(arr);
   res.send(arr);
@@ -169,12 +185,12 @@ server.get("/enter", async (req, res) => {
         );
 
           await web3.eth.sendSignedTransaction(signed.rawTransaction);
-          res.status(200).send("Successfully")
+          res.status(200).send("Verified and entered building successfully")
         } catch 
           (err){
-            res.status(200).send("You are entering another building");
+            res.status(200).send("You have already entered a building");
           };
-      } else res.status(200).send("You are not working here");
+      } else res.status(200).send("You are not authorized to work here");
     });
 });
 
@@ -221,12 +237,12 @@ server.get("/leave", async (req, res) => {
           );
   
             await web3.eth.sendSignedTransaction(signed.rawTransaction);
-            res.status(200).send("Successfully")
+            res.status(200).send("Verified and Left successfully")
           } catch 
             (err){
-              res.status(200).send("You are in another building");
+              res.status(200).send("You have not entered a building");
             };
-        } else res.status(200).send("You are not working here");
+        } else res.status(200).send("The cert is not correct");
       });
   });
 
