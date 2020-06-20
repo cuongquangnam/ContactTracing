@@ -10,7 +10,9 @@ Further development may include creation of QR code representing the URL for the
 
 ## Installation Guide:
 Install Ganache from https://www.trufflesuite.com/ganache
+
 Install Nodejs from https://nodejs.org/en/download/
+
 Install Truffle with npm
 `npm install -g truffle`
 
