@@ -4,13 +4,13 @@ $("#enter").on('click',(e)=>{
     e.preventDefault();
     let cert = document.querySelector("#cert").value;
     if (document.querySelector("#a").checked){
-        buildingAddress = "0xe145479292caca174d522bc245f4edc7360c06a4"
+        buildingAddress = "ADDRESS-OF-BUILDING-1"
     }
     else if (document.querySelector("#b").checked){
-        buildingAddress = "0x7CCbEB7719f70ab6b9615a692672a05b66609736"
+        buildingAddress = "ADDRESS-OF-BUILDING-2"
     }
     else 
-    buildingAddress = "0xf33c969B73BAED13c31F17183e9C771D0D50dbCf"
+    buildingAddress = "ADDRESS-OF-BUILDING-3"
   
     $.ajax({
         data: {
@@ -30,13 +30,13 @@ $("#leave").on('click',(e)=>{
     e.preventDefault();
     let cert = document.querySelector("#cert").value;
     if (document.querySelector("#a").checked){
-        buildingAddress = "0xe145479292caca174d522bc245f4edc7360c06a4"
+        buildingAddress = "ADDRESS-OF-BUILDING-1"
     }
     else if (document.querySelector("#b").checked){
-        buildingAddress = "0x7CCbEB7719f70ab6b9615a692672a05b66609736"
+        buildingAddress = "ADDRESS-OF-BUILDING-2"
     }
     else 
-    buildingAddress = "0xf33c969B73BAED13c31F17183e9C771D0D50dbCf"
+    buildingAddress = "ADDRESS-OF-BUILDING-3"
   
     $.ajax({
         data: {

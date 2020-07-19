@@ -13,15 +13,15 @@ server.use(express.static("files"));
 var web3 = new Web3("http://localhost:7545");
 var dFac = new web3.eth.Contract(
   DIDDocumentFactory.abi,
-  "0x9EaDd47e64599e3cf454Bee5e147e04Fc3071813"
+  "DID-DOCUMENT-FACTORY-ADDRESS"
 );
 var bFac = new web3.eth.Contract(
   buildingFactory.abi,
-  "0xEF6d739c57CA17902961dAF5771ba28ddd8cc108"
+  "BUILDING-FACTORY-ADDRESS"
 );
 var privateKey =
-  "8e72ff3d3243bd5684b34bcb2d7b40e02b859506bbfe82c96814c9d501805a00";
-var accountAddr = "0x756EE3bDa36f890A7eec6ad472971875fE52101c";
+  "PRIVATE-KEY-OF-A-RANDOM-ACCOUNT-ON-GANACHE(CAN BE THE FIRST ONE)";
+var accountAddr = "PUBLIC-ADDRESS-OF-ABOVE-PRIVATE-KEY";
 async function getHigherLower(time, low, high) {
   if (high - low == 1) return [high, low];
   let mid = Math.floor((low + high) / 2);
@@ -212,7 +212,7 @@ server.get("/leave", async (req, res) => {
     // console.log(message)
     let signature = certJSON.signature;
     let pubAddress = web3.eth.accounts.recover(message, signature);
-    let DID = "did:ether:" + pubAddress.substring(2);
+    let DID = "did:ether:" + pubAddress;
     await building.methods
       .check_companyOwner(DID)
       .call()

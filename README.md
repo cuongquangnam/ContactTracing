@@ -16,6 +16,8 @@ Install Nodejs from https://nodejs.org/en/download/
 Install Truffle with npm
 `npm install -g truffle`
 
+Install all dependencies 
+
 ## Guide: 
 1. Clone the repo 
 `git clone https://github.com/cuongquangnam/ContactTracing.git`
@@ -32,7 +34,7 @@ Notice that balance of eth in ganache's first account decreases after contracts 
 While in `truffle console`,
    - `var myContractBF = await BuildingFactory.deployed()`
 This fetches the buildingFactory object deployed in ganache.
-   - `myContractBF.set_didfactory("get-did-factory-address-from-ganache-tab-contracts")`
+   - `myContractBF.set_didfactory("get-did-document-factory-address-from-ganache-tab-contracts")`
 Calls set_didfactory function from buildingFactory object.
    - `myContractBF.createBuilding("Building1","100","244")`
 `myContractBF.createBuilding("Building2","340","1144")
@@ -43,8 +45,8 @@ Calls set_didfactory function from buildingFactory object.
 `myContractBF.getBuildingAt(1)`
 `myContractBF.getBuildingAt(2)`
 Returns did of the building created. Should be in the format `'did:ether:f7317f93f6163e0611a6ebface56e36e2ff6ce9c'`
-   - `var buildingOne = await Building.at('get-building-address-from-building-did')`
-This fetches the building object that was created earlier. An example is 
+   - `var buildingOne = await Building.at('get-building-address-from-building-1-did')`
+This fetches the building 1 object that was created earlier. An example is 
 `var buildingOne = await Building.at('0xf7317f93f6163e0611a6ebface56e36e2ff6ce9c')`
    - `buildingOne.set_companyOwner("get-random-address-account-to-be-owners-address")`
 For the companyOwner's address select a random address from the ganache accounts tab. An example would be `buildingOne.set_companyOwner("did:ether:0x9416a4Fc66b90d72C3697cb06edeAd7774A74a3a")` where `0x9416a4Fc66b90d72C3697cb06edeAd7774A74a3a` is the random address selected to be the owner's address.
@@ -52,13 +54,14 @@ For the companyOwner's address select a random address from the ganache accounts
    - change the `DIDDocumentFactory.abi` and `buildingFactory.abi` address in `server.js` which can be obtained from the contracts tab in ganache. For example, both take the format of `0x982993cCa0B474070c652e8363bD7e16A962613E`
    - change the `privateKey` and `accountAddr` fields in `server.js` to the private key corresponding to the companyOwner's address and the company owner's address. The private key of the account can be found in ganache's account tab by clicking on the key icon on the rightmostside of the account address. An example is `var privateKey = "7f155baaba59074655bceb20c21f6d1ce835b00a7c0b0ff3797c6f56d52bfa8c";` 
 `var accountAddr = "0x9416a4Fc66b90d72C3697cb06edeAd7774A74a3a";`
-    - change all the `buildingAddress` in `scriptVerify.js` with the addresses obtained earlier. For example `buildingAddress = 0xf7317f93f6163e0611a6ebface56e36e2ff6ce9c`
+    - change all the `buildingAddress` in `files/scriptVerify.js` with the addresses obtained earlier. For example `buildingAddress = 0xf7317f93f6163e0611a6ebface56e36e2ff6ce9c`
+    - change all the displayed address in 'verify.html' with the addresses obtained earlier. For example `did:ether:0xf7317f93f6163e0611a6ebface56e36e2ff6ce9c`
 7. Add a new terminal and do `node server`
-8. Access `localhost:3000/sign.html` on your preferred browser.
+8. Access `localhost:3000/sign.html` on your preferred browser (should be best if on Chrome)
 9. Select a random account address from the ganache accounts tab to be a worker's address and replace it with workerDID in the following format. Replace companyOwnerDID with the previously selected companyOwner account from ganache. 
 `{"workerDID":"did:ether:0x767fa9Fca86f8326e273f98506ad3B57893F6B4c","companyOwnerDID":"did:ether:0x9416a4Fc66b90d72C3697cb06edeAd7774A74a3a"}`
-Use the private key of the companyOwner. The private key of the account can be found in ganache's account tab by clicking on the key icon on the rightmostside of the account address. Private key will be in the following format. 
-`7f155baaba59074655bceb20c21f6d1ce835b00a7c0b0ff3797c6f56d52bfa8c`
+Use the private key of the companyOwner. The private key of the account can be found in ganache's account tab by clicking on the key icon on the rightmostside of the account address. Private key has 64 characters, example:
+`E9873D79C6D87DC0FB6A5778633389_SAMPLE_PRIVATE_KEY_DO_NOT_IMPORT_F4453213303DA61F20BD67FC233AA33262`
 Press submit query. 
 The response will be in the following format.
 `{"workerDID":"did:ether:0x767fa9Fca86f8326e273f98506ad3B57893F6B4c","companyOwnerDID":"did:ether:0x9416a4Fc66b90d72C3697cb06edeAd7774A74a3a","signature":"0xa81da85a0f5e6fadb4bac943485e3281f01d90c12a2b3266cd8ba2e44836973e237f1b50d35515d50e3b31435ec4ad61b95aa17bd7310994c52c6e55fc8946931c"}`
