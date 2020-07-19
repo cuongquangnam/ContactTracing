@@ -1,0 +1,24 @@
+{
+  "name": "contacttracing",
+  "version": "1.0.0",
+  "description": "This is a demo aiming to showcase the use of Decentralized ID and Blockchain to solve the problem of verification and contact tracing of COVID-19 pandemic.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cuongquangnam/ContactTracing.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cuongquangnam/ContactTracing/issues"
+  },
+  "homepage": "https://github.com/cuongquangnam/ContactTracing#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "web3": "^1.2.11"
+  }
+}
