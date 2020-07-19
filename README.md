@@ -16,7 +16,8 @@ Install Nodejs from https://nodejs.org/en/download/
 Install Truffle with npm
 `npm install -g truffle`
 
-Install all dependencies 
+Install all dependencies with npm
+`npm install`
 
 ## Guide: 
 1. Clone the repo 
