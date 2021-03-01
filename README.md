@@ -6,6 +6,8 @@ The project uses Truffle + Ganache testnet for testing.
 
 Further development may include creation of QR code representing the URL for the json certificate so that the verifier can check by scanning the code.
 
+The demo video and use case description can be found here: https://devpost.com/software/streamlining-contact-tracing-to-reopen-our-economy
+
 ## Veritrace
 
 ## Installation Guide:
